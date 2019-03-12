@@ -71,8 +71,7 @@ class ScorePageState extends State<ScorePage> {
               )
             ],
           );
-        }
-    );
+        });
   }
 
   @override
@@ -85,64 +84,61 @@ class ScorePageState extends State<ScorePage> {
         child: Column(
 //          mainAxisAlignment: MainAxisAlignment.center,
 //          crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Expanded(
+          child: Container(
+              color: Colors.white70,
+              alignment: Alignment.center,
+              child: InkWell(
+                onTap: _editScoreDialog,
+                child: Text(
+                  _score.toString(),
+                  style: _textStyle,
+                ),
+              )),
+        ),
+        Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Expanded(
+                child: FlatButton(
+                  child: IconButton(
+                      icon: Icon(Icons.remove),
+                      iconSize: 100.0,
+                      onPressed: null),
+                  onPressed: _decrementScore,
+                ),
+              ),
+              Expanded(
+                child: FlatButton(
+                  child: IconButton(
+                      icon: Icon(Icons.add), iconSize: 100.0, onPressed: null),
+                  onPressed: _incrementScore,
+                ),
+              )
+            ],
+          ),
+        ),
+        Expanded(
+            child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Expanded(
-              child: Container(
-                color: Colors.white70,
-                alignment: Alignment.center,
-                child: InkWell(
-                  onTap: _editScoreDialog,
-                  child: Text(
-                    _score.toString(),
-                    style: _textStyle,
-                  ),
-                )
+              child: FlatButton(
+                onPressed: _resetScore,
+                child: IconButton(
+                    icon: Icon(Icons.refresh),
+                    iconSize: 100.0,
+                    onPressed: null),
               ),
-            ),
-            Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Expanded(
-                    child: FlatButton(
-                      child: IconButton(
-                          icon: Icon(Icons.remove),
-                          iconSize: 100.0,
-                          onPressed: null),
-                      onPressed: _decrementScore,
-                    ),
-                  ),
-                  Expanded(
-                    child: FlatButton(
-                      child: IconButton(
-                          icon: Icon(Icons.add),
-                          iconSize: 100.0,
-                          onPressed: null),
-                      onPressed: _incrementScore,
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Expanded(
-                child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Expanded(
-                  child: FlatButton(
-                    onPressed: _resetScore,
-                    child: IconButton(
-                        icon: Icon(Icons.refresh),
-                        iconSize: 100.0,
-                        onPressed: null),
-                  ),
-                )
-              ],
-            ))
+            )
           ],
-        )
+        ))
+      ],
+    )
 //      ),
         );
   }
