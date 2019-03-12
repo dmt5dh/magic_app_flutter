@@ -24,10 +24,29 @@ class ScorePageState extends State<ScorePage> {
     });
   }
 
+  void _incrementScoreFive() {
+    setState(() {
+      _score+=5;
+    });
+  }
+
   void _decrementScore() {
     if (_score > 0) {
       setState(() {
         _score--;
+      });
+    }
+  }
+
+  void _decrementScoreFive() {
+    if (_score > 5) {
+      setState(() {
+        _score-=5;
+      });
+    }
+    else {
+      setState(() {
+        _score = 0;
       });
     }
   }
@@ -78,7 +97,18 @@ class ScorePageState extends State<ScorePage> {
   Widget build(BuildContext context) {
 //    scoreTextFieldController.text = _score.toString();
 
-    return Container(
+    return Scaffold (
+      appBar: AppBar(
+        actions: <Widget>[
+          FlatButton(
+            onPressed: _resetScore,
+            child: IconButton(
+                icon: Icon(Icons.refresh, color: Colors.white,),
+                onPressed: null),
+          ),
+        ],
+      ),
+        body: Container(
 //        margin: EdgeInsets.all(5.0),
 //      child: Center(
         child: Column(
@@ -122,24 +152,33 @@ class ScorePageState extends State<ScorePage> {
           ),
         ),
         Expanded(
-            child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Expanded(
-              child: FlatButton(
-                onPressed: _resetScore,
-                child: IconButton(
-                    icon: Icon(Icons.refresh),
-                    iconSize: 100.0,
-                    onPressed: null),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Expanded(
+                child: FlatButton(
+                  child: IconButton(
+                      icon: Icon(Icons.looks_5), //TODO: make or find icons for these
+                      iconSize: 100.0,
+                      onPressed: null),
+                  onPressed: _decrementScoreFive,
+                ),
               ),
-            )
-          ],
-        ))
+              Expanded(
+                child: FlatButton(
+                  child: IconButton(
+                      icon: Icon(Icons.looks_5), iconSize: 100.0, onPressed: null),
+                  onPressed: _incrementScoreFive,
+                ),
+              )
+            ],
+          ),
+        ),
       ],
     )
 //      ),
-        );
+        )
+    );
   }
 }
