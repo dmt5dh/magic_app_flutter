@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'pages/score.dart';
-import 'pages/search.dart';
+import 'package:magic_app_flutter/pages/search/search.dart';
 
 class HomePage extends StatefulWidget {
   @override
