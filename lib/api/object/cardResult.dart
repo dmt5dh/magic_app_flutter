@@ -2,7 +2,7 @@ class CardResult {
   final String object;
   final String id;
   final String name;
-  final String imageUrl;
+  final String cardImageUrl;
   final String manaCost;
   final double convertManaCost;
   final String cardType;
@@ -15,12 +15,14 @@ class CardResult {
   final String rulingsUrl;
   final String rarity;
   final String priceUsd;
+  final String imageUrl;
+  final String flavorText;
 
   CardResult(
       {this.object,
       this.id,
       this.name,
-      this.imageUrl,
+      this.cardImageUrl,
       this.manaCost,
       this.convertManaCost,
       this.cardType,
@@ -32,14 +34,16 @@ class CardResult {
       this.setName,
       this.rulingsUrl,
       this.rarity,
-      this.priceUsd});
+      this.priceUsd,
+      this.imageUrl,
+      this.flavorText});
 
   factory CardResult.fromJson(Map<String, dynamic> json) {
     return CardResult(
       object: json['object'],
       id: json['id'],
       name: json['name'],
-      imageUrl: json['image_uris']['normal'],
+      cardImageUrl: json['image_uris']['normal'],
       manaCost: json['mana_cost'],
       convertManaCost: json['cmc'],
       cardType: json['type_line'],
@@ -52,6 +56,8 @@ class CardResult {
       rulingsUrl: json['rulings_uri'],
       rarity: json['rarity'],
       priceUsd: json['usd'],
+      imageUrl: json['image_uris']['art_crop'],
+      flavorText: json['flavor_text']
     );
   }
 
