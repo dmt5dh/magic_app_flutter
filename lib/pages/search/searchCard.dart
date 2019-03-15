@@ -24,19 +24,11 @@ class SearchCardPage extends StatelessWidget {
     return ListView(
       children: <Widget>[
         ListTile(
-          title: Text(cardResult.name,
-              style: TextStyle(fontWeight: FontWeight.bold)),
-          subtitle: Text(cardResult.cardType),
-          trailing: Text("Artist: " + cardResult.artist),
+          title: Text(cardResult.cardType),
+          subtitle: Text("Artist: " + cardResult.artist),
+          trailing: Text(cardResult.manaCost),
         ),
         Image.network(cardResult.imageUrl),
-        Container(
-          padding: EdgeInsets.fromLTRB(0, 10.0, 0, 10.0),
-          child: ListTile(
-            title: Text(cardResult.oracleText),
-//          subtitle: Text(cardResult.flavorText),
-          ),
-        ),
         Container(
           padding: EdgeInsets.fromLTRB(0, 10.0, 0, 10.0),
           child: ListTile(
@@ -79,6 +71,7 @@ class SearchCardPage extends StatelessWidget {
         initialIndex: 0,
         child: Scaffold(
           appBar: AppBar(
+            title: Text(cardResult.name),
             bottom: TabBar(
               tabs: <Widget>[
                 Tab(text: "Image"),
