@@ -17,6 +17,7 @@ class CardResult {
   final String priceUsd;
   final String imageUrl;
   final String flavorText;
+  final String artist;
 
   CardResult(
       {this.object,
@@ -36,7 +37,8 @@ class CardResult {
       this.rarity,
       this.priceUsd,
       this.imageUrl,
-      this.flavorText});
+      this.flavorText,
+      this.artist});
 
   factory CardResult.fromJson(Map<String, dynamic> json) {
     return CardResult(
@@ -57,7 +59,8 @@ class CardResult {
       rarity: json['rarity'],
       priceUsd: json['usd'],
       imageUrl: json['image_uris']['art_crop'],
-      flavorText: json['flavor_text']
+      flavorText: json['flavor_text'],
+      artist: json['artist']
     );
   }
 

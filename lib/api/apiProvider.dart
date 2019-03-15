@@ -3,6 +3,7 @@ import 'package:sprintf/sprintf.dart';
 import 'package:http/http.dart' as http;
 import 'object/autocomplete.dart';
 import 'object/cardResult.dart';
+import 'object/ruling.dart';
 
 void main() {
   //Testing http calls
@@ -14,6 +15,12 @@ void main() {
 //  apiProvider.searchRequest('Zurgo Helmsmasher')
 //      .then((response) => {
 //  print(CardResult.fromJson(json.decode(response.body)).toString())
+//  });
+
+//  ApiProvider.getCardRulings("https://api.scryfall.com/cards/3ff91245-57d8-4020-b260-495c938a515b/rulings")
+//      .then((response) {
+//        List<Ruling> asdf = ApiProvider.parseRulingResponse(response);
+//        print(asdf[0].toString());
 //  });
 }
 
@@ -40,5 +47,20 @@ class ApiProvider {
 
   static CardResult parseCardSearchResponse(http.Response response) {
     return CardResult.fromJson(json.decode(response.body));
+  }
+
+  static Future<http.Response> getCardRulings(String rulingsUrl) async {
+    return await http.get(Uri.encodeFull(rulingsUrl));
+  }
+
+  static List<Ruling> parseRulingResponse(http.Response response) {
+    List<Ruling> rulings = List();
+    Map<String, dynamic> rulingJson = json.decode(response.body);
+
+    for(dynamic rule in rulingJson['data']) {
+      rulings.add(Ruling.fromJson(rule));
+    }
+
+    return rulings;
   }
 }

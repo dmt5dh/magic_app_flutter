@@ -3,6 +3,7 @@ import 'package:magic_app_flutter/api/apiProvider.dart';
 import 'package:magic_app_flutter/ui/loadWidget.dart';
 import 'package:magic_app_flutter/pages/search/searchCard.dart';
 import 'package:magic_app_flutter/api/object/cardResult.dart';
+import 'package:magic_app_flutter/api/object/ruling.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -17,10 +18,16 @@ class SearchPageState extends State<SearchPage> {
   var _data;
 
   void _DisplayCardSearch(String s) {
+//    setState(() {
+//      _childDisplay = LoadingWidget(); // Show loading while waiting for response
+//    });
     ApiProvider.searchRequest(s)
         .then((response) {
           CardResult cardResult = ApiProvider.parseCardSearchResponse(response);
-      Navigator.push(context, MaterialPageRoute(builder: (context) => SearchCardPage(cardResult: cardResult)));
+          ApiProvider.getCardRulings(cardResult.rulingsUrl).then((response) {
+            List<Ruling> rulings = ApiProvider.parseRulingResponse(response);
+            Navigator.push(context, MaterialPageRoute(builder: (context) => SearchCardPage(cardResult: cardResult, rulings: rulings)));
+          });
     });
   }
 
@@ -48,7 +55,9 @@ class SearchPageState extends State<SearchPage> {
 
   void _testSearch() {
     if(searchController.text.length > 3) {
-      _childDisplay = LoadingWidget(); // Show loading while waiting for response
+//      setState(() {
+//        _childDisplay = LoadingWidget(); // Show loading while waiting for response
+//      });
       ApiProvider.autocompleteRequest(searchController.text)
           .then((response) async {
             if(response.statusCode == 200) {

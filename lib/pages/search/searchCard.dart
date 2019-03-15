@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:magic_app_flutter/api/object/cardResult.dart';
+import 'package:magic_app_flutter/api/object/ruling.dart';
+import 'package:magic_app_flutter/api/apiProvider.dart';
+import 'package:http/http.dart';
 
 //This stateless because I dont want to do unnecessary api calls
 //Also we shouldnt be redrawing a search result
 class SearchCardPage extends StatelessWidget {
-  final CardResult cardResult;
+  final CardResult
+      cardResult; //TODO: should I do the query here where it's stateless?
+  final List<Ruling> rulings;
 
-  SearchCardPage({this.cardResult});
+  SearchCardPage({this.cardResult, this.rulings});
 
   Widget _buildImagePage() {
     return Container(
@@ -22,24 +27,49 @@ class SearchCardPage extends StatelessWidget {
           title: Text(cardResult.name,
               style: TextStyle(fontWeight: FontWeight.bold)),
           subtitle: Text(cardResult.cardType),
-          trailing: Text(cardResult.manaCost),
+          trailing: Text("Artist: " + cardResult.artist),
         ),
         Image.network(cardResult.imageUrl),
-        ListTile(
-          title: Text(cardResult.oracleText),
+        Container(
+          padding: EdgeInsets.fromLTRB(0, 10.0, 0, 10.0),
+          child: ListTile(
+            title: Text(cardResult.oracleText),
 //          subtitle: Text(cardResult.flavorText),
+          ),
         ),
-//        Container(
-//          padding: EdgeInsets.all(20.0),
-//          child: Table(children: <TableRow>[
-//            TableRow(children: <Widget>[Text("Rarity"), Text(cardResult.rarity)]),
-//            TableRow(children: <Widget>[Text("Power"), Text(cardResult.power)]),
-//            TableRow(children: <Widget>[Text("Toughness"), Text(cardResult.toughness)]),
-//            TableRow(children: <Widget>[Text("Set"), Text(cardResult.setName)]),
-//          ]),
-//        )
+        Container(
+          padding: EdgeInsets.fromLTRB(0, 10.0, 0, 10.0),
+          child: ListTile(
+            title: Text("Rulings"),
+          subtitle: _buildRulingsTable(),
+          ),
+        ),
       ],
     );
+  }
+
+  Widget _buildRulingsTable() {
+    if (rulings.length > 0) {
+      List<TableRow> rulingsRows = List();
+
+      for (Ruling r in rulings) {
+        rulingsRows.add(
+          TableRow(children: <TableCell>[
+            TableCell(
+              child: Text(r.comment),
+            ),
+            TableCell(
+              child: Text(r.publishDate),
+            )
+          ]),
+        );
+      }
+
+      return Table(children: rulingsRows);
+    }
+    else {
+      return Text("None");
+    }
   }
 
   @override
