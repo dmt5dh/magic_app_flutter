@@ -17,7 +17,7 @@ class SearchPageState extends State<SearchPage> {
   Widget _childDisplay = Container();
   var _data;
 
-  void _DisplayCardSearch(String s) {
+  void _displayCardSearch(String s) {
 //    setState(() {
 //      _childDisplay = LoadingWidget(); // Show loading while waiting for response
 //    });
@@ -38,7 +38,7 @@ class SearchPageState extends State<SearchPage> {
             return ListTile(
               title: Text(_data.data[index]),
               onTap: () {
-                _DisplayCardSearch(_data.data[index]);
+                _displayCardSearch(_data.data[index]);
               },
             );
           },
@@ -55,9 +55,6 @@ class SearchPageState extends State<SearchPage> {
 
   void _testSearch() {
     if(searchController.text.length > 3) {
-//      setState(() {
-//        _childDisplay = LoadingWidget(); // Show loading while waiting for response
-//      });
       ApiProvider.autocompleteRequest(searchController.text)
           .then((response) async {
             if(response.statusCode == 200) {
