@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:magic_app_flutter/api/object/cardResult.dart';
 import 'package:magic_app_flutter/api/object/ruling.dart';
-import 'package:magic_app_flutter/api/apiProvider.dart';
-import 'package:http/http.dart';
 
 //This stateless because I dont want to do unnecessary api calls
 //Also we shouldnt be redrawing a search result
@@ -25,15 +23,28 @@ class SearchCardPage extends StatelessWidget {
       children: <Widget>[
         ListTile(
           title: Text(cardResult.cardType),
-          subtitle: Text("Artist: " + cardResult.artist),
+          subtitle: Text(cardResult.setName),
           trailing: Text(cardResult.manaCost),
         ),
         Image.network(cardResult.imageUrl),
         Container(
-          padding: EdgeInsets.fromLTRB(0, 10.0, 0, 10.0),
-          child: ListTile(
-            title: Text("Rulings"),
-          subtitle: _buildRulingsTable(),
+          child: Text(
+            cardResult.artist,
+            textAlign: TextAlign.right,
+            style: TextStyle(decorationColor: Colors.grey),
+          ),
+        ),
+        Container(
+          padding: EdgeInsets.all(15.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "Rulings",
+                textAlign: TextAlign.left,
+              ),
+              _buildRulingsTable(),
+            ],
           ),
         ),
       ],
@@ -44,22 +55,23 @@ class SearchCardPage extends StatelessWidget {
     if (rulings.length > 0) {
       List<TableRow> rulingsRows = List();
 
-      for (Ruling r in rulings) {
+      for (var i = 0; i < rulings.length; i++) {
+        int currentIndex = i + 1;
+        String indexStr = currentIndex.toString() + ". ";
+
         rulingsRows.add(
           TableRow(children: <TableCell>[
             TableCell(
-              child: Text(r.comment),
-            ),
-            TableCell(
-              child: Text(r.publishDate),
-            )
+                child: Padding(
+              padding: EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 5.0),
+              child: Text(indexStr + rulings[i].comment),
+            )),
           ]),
         );
       }
 
       return Table(children: rulingsRows);
-    }
-    else {
+    } else {
       return Text("None");
     }
   }
@@ -75,7 +87,7 @@ class SearchCardPage extends StatelessWidget {
             bottom: TabBar(
               tabs: <Widget>[
                 Tab(text: "Image"),
-                Tab(text: "Data"),
+                Tab(text: "Rulings"),
               ],
             ),
           ),
