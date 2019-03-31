@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'pages/score.dart';
 import 'package:magic_app_flutter/pages/search/search.dart';
+import 'package:magic_app_flutter/pages/dice.dart';
+
 
 class HomePage extends StatefulWidget {
   @override
@@ -13,7 +15,7 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _childPage = [
     ScorePage(),
     SearchPage(),
-    Container(color: Colors.blue)
+    DicePage()
   ];
 
   final List<BottomNavigationBarItem> _navBarItems = [
