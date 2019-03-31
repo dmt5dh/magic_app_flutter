@@ -95,17 +95,17 @@ class ScorePageState extends State<ScorePage> {
 
   @override
   Widget build(BuildContext context) {
-//    scoreTextFieldController.text = _score.toString();
 
     return Scaffold (
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         actions: <Widget>[
-          FlatButton(
-            onPressed: _resetScore,
-            child: IconButton(
-                icon: Icon(Icons.refresh, color: Colors.white,),
-                onPressed: null),
-          ),
+          IconButton(
+              icon: Icon(Icons.refresh, color: Colors.white,),
+              onPressed: _resetScore),
+          IconButton(
+              icon: Icon(Icons.edit, color: Colors.white,),
+              onPressed: _editScoreDialog),
         ],
       ),
         body: Container(
